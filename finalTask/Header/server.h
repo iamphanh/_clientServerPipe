@@ -1,29 +1,27 @@
-﻿
-#ifndef SERVER_H
+﻿#ifndef SERVER_H
 #define SERVER_H
-
-
 #include "../Header/client.h"
+
 #include"../Header/pipe.h"
 
-class server {
+class Server {
 
 private:
 	static BOOL state;
-	pipe* serverP;
+	Pipe* server_p;
 
 public:
-	server();
-	~server();
-	BOOL WINAPI start();
-	static BOOL getState();
-	static BOOL setState(BOOL x);
+	Server();
+	~Server();
+	BOOL WINAPI Start();
+	static BOOL GetState();
+	static BOOL SetState(BOOL x);
 };
-inline BOOL server::getState() {
+inline BOOL Server::GetState() {
 	return state;
 };
 
-inline BOOL server::setState(BOOL x) {
+inline BOOL Server::SetState(BOOL x) {
 	return state = x;
 }
 #endif // !SERVER_H

@@ -5,15 +5,15 @@
 #include"../Header/pipe.h"
 
 
-class client {
+class Client {
 private:
-	pipe* clientP;
+	Pipe* client_p;
 	static BOOL WINAPI state;
 public:
-	client();
-	~client();
-	int WINAPI connect() const;
-	static BOOL WINAPI getState();
+	Client();
+	~Client();
+	int WINAPI ConnectC() const;
+	static BOOL WINAPI GetState();
 	
 };
 

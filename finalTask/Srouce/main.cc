@@ -1,23 +1,24 @@
 ﻿#include "../Header/client.h"
 #include "../Header/server.h"
 #include "../Header/controler.h"
+
 #include <thread>
 #include <mutex>
 
 int main() {
 	std::mutex mutexS;
 	do {
-		char c = display::displayMenu();
+		char c = Display::DisplayMenu();
 		if (c == '1') {
 			mutexS.lock();
-			server* _server = new server();
-			controler::controlerS(*_server);
+			Server* _server = new Server();
+			Controler::ControlerS(*_server);
 			mutexS.unlock();
 
 		}
 		else if (c == '2') {
-			client* _client = new client();
-			controler::controlerC(*_client);
+			Client* _client = new Client();
+			Controler::ControlerC(*_client);
 
 		}
 		else if (c == '3') {

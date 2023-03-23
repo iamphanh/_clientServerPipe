@@ -1,19 +1,18 @@
 #ifndef CONTROLER_H
 #define CONTROLER_H
 
-#define UNICODE
-#define _UNICODE
 #include "../Header/server.h"
 #include "../Header/client.h"
 #include "../Header/display.h"
-class controler {
+
+class Controler {
 private:
-    static display _display;
+    static Display _display;
 public:
-    controler();
-    ~controler();
-    static void WINAPI controlerS(server& _server);
-    static void WINAPI controlerC(client& _client);
+    Controler();
+    ~Controler();
+    static void WINAPI ControlerS(Server& _server);
+    static void WINAPI ControlerC(Client& _client);
 };
 
 #endif 

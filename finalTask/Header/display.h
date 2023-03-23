@@ -3,14 +3,15 @@
 
 #include "server.h"
 #include "client.h"
+
 class server;
-class display {
+
+class Display {
 public:
-    display();
-    ~display();
-    static char displayMenu();
-    static void displayS1(server& _server);
-    static char displayS1();
-    static char displayC1();
+    Display();
+    ~Display();
+    static char DisplayMenu();
+    static char DisplayS();
+    static char DisplayC1();
 };
 #endif // DISPLAY_H

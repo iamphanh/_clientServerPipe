@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.10)
 
 include_directories(Header)
 
-file(GLOB SOURCES "Srouce/*.cpp")
+file(GLOB SOURCES "Srouce/*.cc")
 
 find_library(WINAPI_LIBRARY_NAME 
     NAMES kernel32 user32 gdi32 ws2_32.lib ws2_32

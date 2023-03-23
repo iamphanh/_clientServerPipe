@@ -1,28 +1,34 @@
 #define UNICODE
 #define _UNICODE
+#define WIN32_LEAN_AND_MEAN
+#pragma comment(lib, "ws2_32.lib")
+
 #include "../Header/pipe.h"
+
 #include "../Header/display.h"
+
 #include <string>
+
 #include <tchar.h>
-pipe::pipe() {}
-const LPCTSTR pipe::namePipe = TEXT("\\\\.\\pipe\\phanh");
-HANDLE pipe::hpipe = INVALID_HANDLE_VALUE;
-HANDLE pipe::fpipe = INVALID_HANDLE_VALUE;
-BOOL pipe::serverHandle() {
-	hpipe = CreateNamedPipe(namePipe,
+
+Pipe::Pipe() {}
+const LPCTSTR Pipe::kname_pipe = TEXT("\\\\.\\pipe\\phanh");
+HANDLE Pipe::hpipe = INVALID_HANDLE_VALUE;
+HANDLE Pipe::fpipe = INVALID_HANDLE_VALUE;
+BOOL Pipe::ServerHandle() {
+	hpipe = CreateNamedPipe(kname_pipe,
 		PIPE_ACCESS_DUPLEX, PIPE_TYPE_BYTE
 		| PIPE_READMODE_BYTE | PIPE_WAIT,
 		1, 1024, 1024, NMPWAIT_USE_DEFAULT_WAIT, NULL);
 	if (hpipe == INVALID_HANDLE_VALUE) {
 		std::cout << GetLastError();
-		CloseHandle(hpipe);
 		return false;
 	}
 	else
 	{
 		std::cout << "Create pipe successful!!" << std::endl;
-		display _display;
-		char c = _display.displayS1();
+		Display _display;
+		char c = _display.DisplayS();
 		if (c == '1') {
 			DisconnectNamedPipe(hpipe);
 			CloseHandle(hpipe);
@@ -34,7 +40,8 @@ BOOL pipe::serverHandle() {
 				CloseHandle(hpipe);
 				return false;
 			}
-			DWORD dwWritten;
+			DWORD dwWritten, write;
+			TCHAR  buf[1024];
 			std::cin.ignore();
 			std::string str;
 			std::cout << "Message: ";
@@ -43,10 +50,8 @@ BOOL pipe::serverHandle() {
 			wchar_t* wstr = new wchar_t[len];
 			MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, wstr, len);
 			LPCTSTR lpMsg = wstr;
-			BOOL resultPipe;
-			DWORD write;
 			if (GetLastError() != ERROR_PIPE_CONNECTED) {
-				resultPipe = WriteFile(hpipe,
+				BOOL resultPipe = WriteFile(hpipe,
 					lpMsg,
 					DWORD((lstrlen(lpMsg) + 1) * sizeof(TCHAR)),
 					&write,
@@ -57,7 +62,6 @@ BOOL pipe::serverHandle() {
 					return false;
 				}
 				std::cout << "Send message successful!!" << std::endl;
-				TCHAR  buf[1024];
 				std::cout << "Waiting read from client ..." << std::endl;
 				if (!ReadFile(hpipe, buf, 1024 * sizeof(TCHAR), &dwWritten, NULL))
 				{
@@ -77,7 +81,7 @@ BOOL pipe::serverHandle() {
 			return true;
 		}
 		else if (c == '4') {
-			display::displayMenu();
+			Display::DisplayMenu();
 
 		}
 		else if (c == '5') {
@@ -90,9 +94,8 @@ BOOL pipe::serverHandle() {
 		return true;
 	}
 };
-int WINAPI pipe::clientHandle() {
-	HANDLE fpipe;
-	fpipe = CreateFile(namePipe,
+int WINAPI Pipe::ClientHandle() {
+	HANDLE fpipe = CreateFile(kname_pipe,
 		GENERIC_READ | GENERIC_WRITE,
 		FILE_SHARE_READ | FILE_SHARE_WRITE,
 		NULL,
@@ -101,19 +104,19 @@ int WINAPI pipe::clientHandle() {
 		NULL);
 	if (fpipe == INVALID_HANDLE_VALUE) {
 		int erorr = WSAGetLastError();
-		//std::cout << erorr;
 		return erorr;
 	}
 	else {
-		display _display;
+		Display _display;
 		std::cout << "Client connect successfull!!!" << std::endl;
-		char c = _display.displayC1();
+		char c = _display.DisplayC1();
 		if (c == '1') {
 			CloseHandle(fpipe);
 		}
 		else if (c == '2')
 		{
-			DWORD dwWritten;
+			DWORD dwWritten, write;
+			TCHAR  buf[1024];
 			std::cin.ignore();
 			std::string str;
 			std::cout << "Message: ";
@@ -122,9 +125,7 @@ int WINAPI pipe::clientHandle() {
 			wchar_t* wstr = new wchar_t[len];
 			MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, wstr, len);
 			LPCTSTR lpMsg = wstr;
-			BOOL resultPipe;
-			DWORD write;
-			resultPipe = WriteFile(fpipe,
+			BOOL resultPipe = WriteFile(fpipe,
 				lpMsg,
 				DWORD((lstrlen(lpMsg) + 1) * sizeof(TCHAR)),
 				&write,
@@ -135,7 +136,6 @@ int WINAPI pipe::clientHandle() {
 				CloseHandle(fpipe);
 				return 1;
 			}
-			TCHAR  buf[1024];
 			std::cout << "Waiting read from server ..." << std::endl;
 			if (!ReadFile(fpipe, buf, 1024 * sizeof(TCHAR), &dwWritten, NULL))
 			{
@@ -150,7 +150,7 @@ int WINAPI pipe::clientHandle() {
 
 		}
 		else if (c == '4') {
-			display::displayMenu();
+			Display::DisplayMenu();
 		}
 		else if (c == '5')
 		{
@@ -160,9 +160,8 @@ int WINAPI pipe::clientHandle() {
 		else
 		{
 			std::cout << "\n\t\tErorr:Invalid input characters" << std::endl;
-			//continue;
 		}
 		return 0;
 	}
 }
-pipe::~pipe() {}
+Pipe::~Pipe() {}

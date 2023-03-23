@@ -1,8 +1,8 @@
 #include "../Header/display.h"
 
-display::display() {}
-display::~display() {}
-char display::displayC1()
+Display::Display() {}
+Display::~Display() {}
+char Display::DisplayC1()
 {
 	/*client _client;
 	_client.connect();*/
@@ -17,7 +17,7 @@ char display::displayC1()
 	std::cin >> c;
 	return c;
 }
-char display::displayS1()
+char Display::DisplayS()
 {
 	/*server _server;*/
 	std::cout << "\t\t\t>>>>>>> Server mode <<<<<<< " << std::endl;
@@ -32,7 +32,7 @@ char display::displayS1()
 	return c;
 
 }
-char display::displayMenu()
+char Display::DisplayMenu()
 {
 	std::cout << "\n\n\n\n\t\t\t\t\t\tSERVER AND CLIENT\n\n\n\n";
 	std::cout << "\t\tChoose mode: 1. Server\t\t\ 2.Client\t\t 3.Quit\n";
