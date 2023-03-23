@@ -11,9 +11,10 @@
 
 class Network {
 public:
-    virtual ~Network() {};
-    virtual BOOL ServerHandle() = 0;
-    virtual int ClientHandle() = 0;
+	virtual ~Network() {};
+
+	virtual BOOL ServerHandle() = 0;
+	virtual int ClientHandle() = 0;
 
 };
 

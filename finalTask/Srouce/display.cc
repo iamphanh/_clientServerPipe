@@ -4,8 +4,6 @@ Display::Display() {}
 Display::~Display() {}
 char Display::DisplayC1()
 {
-	/*client _client;
-	_client.connect();*/
 	std::cout << "\t\t\t>>>>>>> Client mode <<<<<<< " << std::endl;
 	std::cout << "\t\tChoose mode: \n";
 	std::cout << "\t\t '1' : Disconnect\n";
@@ -19,7 +17,6 @@ char Display::DisplayC1()
 }
 char Display::DisplayS()
 {
-	/*server _server;*/
 	std::cout << "\t\t\t>>>>>>> Server mode <<<<<<< " << std::endl;
 	std::cout << "\t\tChoose mode: \n";
 	std::cout << "\t\t '1' : Stop server\n";

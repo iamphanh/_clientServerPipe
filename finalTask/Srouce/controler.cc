@@ -23,24 +23,23 @@ void Controler::ControlerS(Server& _server)
 		exit(1);
 	}
 
-};
-
+}
 void WINAPI Controler::ControlerC(Client& _client)
 {
 	std::mutex clientS;
-		if (_client.ConnectC() == 0) {
-			std::cout << "Connect successfull" << std::endl;
-		}
-		else if (_client.ConnectC() == 1) {
-			    clientS.lock();
-				std::cout << "Create new server from client!!" << std::endl;
-				Server* _server = new Server();
-				ControlerS(*_server);
-				clientS.unlock();
-		}
-		else {
-			std::cout << "Connect failed" << std::endl;
-		}
+	if (_client.ConnectC() == 0) {
+		std::cout << "Connect successfull" << std::endl;
+	}
+	else if (_client.ConnectC() == 1) {
+		clientS.lock();
+		std::cout << "Create new server from client!!" << std::endl;
+		Server* _server = new Server();
+		ControlerS(*_server);
+		clientS.unlock();
+	}
+	else {
+		std::cout << "Connect failed" << std::endl;
+	}
 }
 
 

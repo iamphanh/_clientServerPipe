@@ -6,9 +6,7 @@
 Server::Server() {
 	server_p = new Pipe();
 }
-
 BOOL Server::state = false;
-
 BOOL __stdcall Server::Start()
 {
 	if (!server_p->ServerHandle()) {
@@ -17,9 +15,7 @@ BOOL __stdcall Server::Start()
 	}
 	std::cout << "Client connected!\n";
 	return true;
-	
 }
-
 Server::~Server() {
 	delete server_p;
 }

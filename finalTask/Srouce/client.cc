@@ -6,11 +6,11 @@
 BOOL WINAPI Client::state = false;
 
 Client::Client() {
-	client_p= new Pipe();
+    client_p = new Pipe();
 }
 int __stdcall Client::ConnectC() const
 {
-    if (client_p->ClientHandle()==0) {
+	if (client_p->ClientHandle() == 0) {
 		state = true;
 		std::cout << "Client connect successfull!!!" << std::endl;
 		return 0;
@@ -24,7 +24,7 @@ int __stdcall Client::ConnectC() const
 }
 BOOL WINAPI Client::GetState() {
 	return state;
-};
+}
 Client::~Client() {
 	delete client_p;
 }

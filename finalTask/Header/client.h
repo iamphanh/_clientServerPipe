@@ -4,17 +4,16 @@
 #include "../Header/server.h"
 #include"../Header/pipe.h"
 
-
 class Client {
-private:
-	Pipe* client_p;
-	static BOOL WINAPI state;
 public:
 	Client();
 	~Client();
+
 	int WINAPI ConnectC() const;
 	static BOOL WINAPI GetState();
-	
-};
 
+private:
+	Pipe* client_p;
+	static BOOL WINAPI state;
+};
 #endif // CLIENT_H

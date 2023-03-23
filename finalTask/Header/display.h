@@ -8,10 +8,11 @@ class server;
 
 class Display {
 public:
-    Display();
-    ~Display();
-    static char DisplayMenu();
-    static char DisplayS();
-    static char DisplayC1();
+	Display();
+	~Display();
+
+	static char DisplayMenu();
+	static char DisplayS();
+	static char DisplayC1();
 };
 #endif // DISPLAY_H

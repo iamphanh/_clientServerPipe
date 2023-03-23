@@ -15,19 +15,15 @@ int main() {
 			Controler::ControlerS(*_server);
 			mutexS.unlock();
 
-		}
-		else if (c == '2') {
+		} else if (c == '2') {
 			Client* _client = new Client();
 			Controler::ControlerC(*_client);
 
-		}
-		else if (c == '3') {
+		} else if (c == '3') {
 			exit(1);
-		}
-		else {
+		} else {
 			std::cout << "Input character invailed!!" << std::endl;
 			break;
 		}
 	} while (true);
-
 }
