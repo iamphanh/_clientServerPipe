@@ -14,9 +14,8 @@ int __stdcall Client::ConnectC() const
 		state = true;
 		std::cout << "Client connect successfull!!!" << std::endl;
 		return 0;
-	}
-	else if (client_p->ClientHandle() == 233 || client_p->ClientHandle() == 2)
-	{
+	} else if (client_p->ClientHandle() == 233 ||
+		client_p->ClientHandle() == 2) {
 		state = false;
 		return 1;
 	}
