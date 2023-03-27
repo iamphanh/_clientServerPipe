@@ -11,34 +11,34 @@
 #include <tchar.h>
 
 Pipe::Pipe() {}
-const LPCTSTR Pipe::kname_pipe = TEXT("\\\\.\\pipe\\phanh");
-HANDLE Pipe::hpipe = INVALID_HANDLE_VALUE;
-HANDLE Pipe::fpipe = INVALID_HANDLE_VALUE;
+const LPCTSTR Pipe::kname_pipe_ = TEXT("\\\\.\\pipe\\phanh");
+HANDLE Pipe::hpipe_ = INVALID_HANDLE_VALUE;
+HANDLE Pipe::fpipe_ = INVALID_HANDLE_VALUE;
 BOOL Pipe::ServerHandle() {
-    hpipe = CreateNamedPipe(kname_pipe,
+    hpipe_ = CreateNamedPipe(kname_pipe_,
 		PIPE_ACCESS_DUPLEX, PIPE_TYPE_BYTE |
 		PIPE_READMODE_BYTE | PIPE_WAIT,
 		1, 1024, 1024,
 		NMPWAIT_USE_DEFAULT_WAIT,
 		NULL);
-	if (hpipe == INVALID_HANDLE_VALUE) {
+	if (hpipe_ == INVALID_HANDLE_VALUE) {
 		std::cout << GetLastError();
 		return false;
 	} else {
 		std::cout << "Create pipe successful!!" << std::endl;
 		Display _display;
-		char c = _display.DisplayS();
+		char c = _display.DisplayServer();
 		if (c == '1') {
-			DisconnectNamedPipe(hpipe);
-			CloseHandle(hpipe);
+			DisconnectNamedPipe(hpipe_);
+			CloseHandle(hpipe_);
 		} else if (c == '2') {
 			std::cout << "Waiting client connect ..." << std::endl;
-			if (!ConnectNamedPipe(hpipe, NULL)) {
+			if (!ConnectNamedPipe(hpipe_, NULL)) {
 				std::cout << "Error connecting to client pipe. Error code: " << GetLastError() << std::endl;
-				CloseHandle(hpipe);
+				CloseHandle(hpipe_);
 				return false;
 			}
-			DWORD dwWritten, write;
+			DWORD dw_written, write;
 			TCHAR  buf[1024];
 			std::cin.ignore();
 			std::string str;
@@ -47,34 +47,34 @@ BOOL Pipe::ServerHandle() {
 			int len = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
 			wchar_t* wstr = new wchar_t[len];
 			MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, wstr, len);
-			LPCTSTR lpMsg = wstr;
+			LPCTSTR lp_msg = wstr;
 			if (GetLastError() != ERROR_PIPE_CONNECTED) {
-				BOOL resultPipe = WriteFile(hpipe,
-					lpMsg,
-					DWORD((lstrlen(lpMsg) + 1) * sizeof(TCHAR)),
+				BOOL result_pipe = WriteFile(hpipe_,
+					lp_msg,
+					DWORD((lstrlen(lp_msg) + 1) * sizeof(TCHAR)),
 					&write,
 					NULL);
-				if (resultPipe == false) {
+				if (result_pipe == false) {
 					std::cout << "Error: WriteFile failed with error " << GetLastError() << std::endl;
-					CloseHandle(hpipe);
+					CloseHandle(hpipe_);
 					return false;
 				}
 				std::cout << "Send message successful!!" << std::endl;
 				std::cout << "Waiting read from client ..." << std::endl;
-				if (!ReadFile(hpipe, buf, 1024 * sizeof(TCHAR), &dwWritten, NULL))
+				if (!ReadFile(hpipe_, buf, 1024 * sizeof(TCHAR), &dw_written, NULL))
 				{
 					printf("Error reading from pipe. Error code: %d\n", GetLastError());
-					CloseHandle(hpipe);
+					CloseHandle(hpipe_);
 					return false;
 				}
 				std::cout << "Received response from client: ";
 				_tprintf(TEXT("\"%s\"\n"), buf);
 			} else {
 				std::cout << "Error connecting to client pipe. Error code: " << GetLastError() << std::endl;
-				CloseHandle(hpipe);
+				CloseHandle(hpipe_);
 				return false;
 			}
-			CloseHandle(hpipe);
+			CloseHandle(hpipe_);
 			return true;
 		} else if (c == '4') {
 			Display::DisplayMenu();
@@ -88,7 +88,7 @@ BOOL Pipe::ServerHandle() {
 	}
 }
 int WINAPI Pipe::ClientHandle() {
-	HANDLE fpipe = CreateFile(kname_pipe,
+	HANDLE fpipe = CreateFile(kname_pipe_,
 		GENERIC_READ | GENERIC_WRITE,
 		FILE_SHARE_READ | FILE_SHARE_WRITE,
 		NULL, OPEN_EXISTING,
@@ -100,11 +100,11 @@ int WINAPI Pipe::ClientHandle() {
 	} else {
 		Display _display;
 		std::cout << "Client connect successfull!!!" << std::endl;
-		char c = _display.DisplayC1();
+		char c = _display.DisplayClient();
 		if (c == '1') {
 			CloseHandle(fpipe);
 		} else if (c == '2') {
-			DWORD dwWritten, write;
+			DWORD dw_written, write;
 			TCHAR  buf[1024];
 			std::cin.ignore();
 			std::string str;
@@ -113,20 +113,20 @@ int WINAPI Pipe::ClientHandle() {
 			int len = MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
 			wchar_t* wstr = new wchar_t[len];
 			MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, wstr, len);
-			LPCTSTR lpMsg = wstr;
-			BOOL resultPipe = WriteFile(fpipe,
-				lpMsg,
-				DWORD((lstrlen(lpMsg) + 1) * sizeof(TCHAR)),
+			LPCTSTR lp_msg = wstr;
+			BOOL result_pipe = WriteFile(fpipe,
+				lp_msg,
+				DWORD((lstrlen(lp_msg) + 1) * sizeof(TCHAR)),
 				&write,
 				NULL);
 			std::cout << "Send message successful!!" << std::endl;
-			if (!resultPipe) {
+			if (!result_pipe) {
 				std::cout << "Error: WriteFile failed with error " << GetLastError() << std::endl;
 				CloseHandle(fpipe);
 				return 1;
 			}
 			std::cout << "Waiting read from server ..." << std::endl;
-			if (!ReadFile(fpipe, buf, 1024 * sizeof(TCHAR), &dwWritten, NULL))
+			if (!ReadFile(fpipe, buf, 1024 * sizeof(TCHAR), &dw_written, NULL))
 			{
 				std::cout << "Error reading from pipe. Error code: " << GetLastError() << std::endl;
 				CloseHandle(fpipe);

@@ -10,11 +10,11 @@ public:
 	Controler();
 	~Controler();
 
-	static void WINAPI ControlerS(Server& _server);
-	static void WINAPI ControlerC(Client& _client);
+	static void WINAPI ControlerServer(Server& _server);
+	static void WINAPI ControlerClient(Client& _client);
 
 private:
-	static Display _display;
+	static Display display_;
 };
 
 #endif 

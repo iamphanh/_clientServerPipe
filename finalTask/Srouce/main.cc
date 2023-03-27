@@ -6,18 +6,18 @@
 #include <mutex>
 
 int main() {
-	std::mutex mutexS;
+	std::mutex mutex_server;
 	do {
 		char c = Display::DisplayMenu();
 		if (c == '1') {
-			mutexS.lock();
+			mutex_server.lock();
 			Server* _server = new Server();
-			Controler::ControlerS(*_server);
-			mutexS.unlock();
+			Controler::ControlerServer(*_server);
+			mutex_server.unlock();
 
 		} else if (c == '2') {
 			Client* _client = new Client();
-			Controler::ControlerC(*_client);
+			Controler::ControlerClient(*_client);
 
 		} else if (c == '3') {
 			exit(1);

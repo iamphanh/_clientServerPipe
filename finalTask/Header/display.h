@@ -4,7 +4,7 @@
 #include "server.h"
 #include "client.h"
 
-class server;
+class Server;
 
 class Display {
 public:

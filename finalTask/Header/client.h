@@ -13,7 +13,7 @@ public:
 	static BOOL WINAPI GetState();
 
 private:
-	Pipe* client_pipe;
-	static BOOL WINAPI state;
+	Pipe* client_pipe_;
+	static BOOL WINAPI state_;
 };
 #endif // CLIENT_H

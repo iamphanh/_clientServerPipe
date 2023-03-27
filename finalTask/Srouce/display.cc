@@ -2,7 +2,7 @@
 
 Display::Display() {}
 Display::~Display() {}
-char Display::DisplayC1()
+char Display::DisplayClient()
 {
 	std::cout << "\t\t\t>>>>>>> Client mode <<<<<<< " << std::endl;
 	std::cout << "\t\tChoose mode: \n";
@@ -15,7 +15,7 @@ char Display::DisplayC1()
 	std::cin >> c;
 	return c;
 }
-char Display::DisplayS()
+char Display::DisplayServer()
 {
 	std::cout << "\t\t\t>>>>>>> Server mode <<<<<<< " << std::endl;
 	std::cout << "\t\tChoose mode: \n";

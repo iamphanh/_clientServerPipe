@@ -4,12 +4,12 @@
 #include "../Header/pipe.h"
 
 Server::Server() {
-	server_p = new Pipe();
+	server_pipe_ = new Pipe();
 }
-BOOL Server::state = false;
+BOOL Server::state_ = false;
 BOOL __stdcall Server::Start()
 {
-	if (!server_p->ServerHandle()) {
+	if (!server_pipe_->ServerHandle()) {
 		std::cout << "Error creating named pipe\n";
 		return false;
 	}
@@ -17,5 +17,5 @@ BOOL __stdcall Server::Start()
 	return true;
 }
 Server::~Server() {
-	delete server_p;
+	delete server_pipe_;
 }
