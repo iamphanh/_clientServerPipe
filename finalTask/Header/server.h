@@ -14,14 +14,14 @@ public:
 	static BOOL SetState(BOOL x);
 
 private:
-	static BOOL state;
-	Pipe* server_p;
+	static BOOL state_;
+	Pipe* server_pipe_;
 };
 
 inline BOOL Server::GetState() {
-	return state;
+	return state_;
 }
 inline BOOL Server::SetState(BOOL x) {
-	return state = x;
+	return state_ = x;
 }
 #endif // !SERVER_H

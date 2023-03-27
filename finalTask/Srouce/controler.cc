@@ -7,7 +7,7 @@
 
 Controler::Controler() {}
 Controler::~Controler() {}
-void Controler::ControlerS(Server& _server)
+void Controler::ControlerServer(Server& _server)
 {
 	if (_server.GetState()) {
 		std::cout << "Server already existes!!" << std::endl;
@@ -20,16 +20,16 @@ void Controler::ControlerS(Server& _server)
 		exit(1);
 	}
 }
-void WINAPI Controler::ControlerC(Client& _client)
+void WINAPI Controler::ControlerClient(Client& _client)
 {
 	std::mutex clientS;
-	if (_client.ConnectC() == 0) {
+	if (_client.ConnectServer() == 0) {
 		std::cout << "Connect successfull" << std::endl;
-	} else if (_client.ConnectC() == 1) {
+	} else if (_client.ConnectServer() == 1) {
 		clientS.lock();
 		std::cout << "Create new server from client!!" << std::endl;
 		Server* _server = new Server();
-		ControlerS(*_server);
+		ControlerServer(*_server);
 		clientS.unlock();
 	} else {
 		std::cout << "Connect failed" << std::endl;

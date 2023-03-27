@@ -12,7 +12,7 @@ public:
 	~Display();
 
 	static char DisplayMenu();
-	static char DisplayS();
-	static char DisplayC1();
+	static char DisplayServer();
+	static char DisplayClient();
 };
 #endif // DISPLAY_H

@@ -9,11 +9,11 @@ public:
 	Client();
 	~Client();
 
-	int WINAPI ConnectC() const;
+	int WINAPI ConnectServer() const;
 	static BOOL WINAPI GetState();
 
 private:
-	Pipe* client_p;
+	Pipe* client_pipe;
 	static BOOL WINAPI state;
 };
 #endif // CLIENT_H

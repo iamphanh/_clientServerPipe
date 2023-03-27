@@ -12,9 +12,9 @@ public:
 	int ClientHandle() override;
 
 private:
-	static HANDLE hpipe;
-	static HANDLE fpipe;
-	static const LPCTSTR kname_pipe;
+	static HANDLE hpipe_;
+	static HANDLE fpipe_;
+	static const LPCTSTR kname_pipe_;
 };
 #endif // PIPE_H
 
