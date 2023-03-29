@@ -27,7 +27,7 @@ void WINAPI Controler::ControlerClient(Client& _client)
 		std::cout << "Connect successfull" << std::endl;
 	} else if (_client.ConnectServer() == 1) {
 		clientS.lock();
-		std::cout << "Create new server from client!!" << std::endl;
+		//std::cout << "Create new server" << std::endl;
 		Server* _server = new Server();
 		ControlerServer(*_server);
 		clientS.unlock();

@@ -19,7 +19,7 @@ char Display::DisplayServer()
 	std::cout << "\t\t\t>>>>>>> Server mode <<<<<<< " << std::endl;
 	std::cout << "\t\tChoose mode: \n";
 	std::cout << "\t\t '1' : Stop server\n";
-	std::cout << "\t\t '2' : Start server\n";
+	std::cout << "\t\t '2' :Send and message\n";
 	std::cout << "\t\t '5' : Quit\n";
 	std::cout << "Enter key: ";
 	char c;

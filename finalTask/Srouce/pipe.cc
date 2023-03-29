@@ -25,19 +25,19 @@ BOOL Pipe::ServerHandle() {
 		std::cout << GetLastError();
 		return false;
 	} else {
-		std::cout << "Create pipe successful!!" << std::endl;
 		Display _display;
 		char c = _display.DisplayServer();
+		std::cout << "Create pipe successful!!" << std::endl;
 		if (c == '1') {
 			DisconnectNamedPipe(hpipe_);
 			CloseHandle(hpipe_);
 		} else if (c == '2') {
 			std::cout << "Waiting client connect ..." << std::endl;
-			if (!ConnectNamedPipe(hpipe_, NULL)) {
+			/*if (!ConnectNamedPipe(hpipe_, NULL)) {
 				std::cout << "Error connecting to client pipe. Error code: " << GetLastError() << std::endl;
 				CloseHandle(hpipe_);
 				return false;
-			}
+			}*/
 			DWORD dw_written, write;
 			TCHAR  buf[1024];
 			std::cin.ignore();
