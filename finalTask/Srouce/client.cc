@@ -19,7 +19,7 @@ int __stdcall Client::ConnectServer() const
 		state_ = false;
 		return 1;
 	}
-	return false;
+	return 2;
 }
 BOOL WINAPI Client::GetState() {
 	return state_;

@@ -76,9 +76,6 @@ BOOL Pipe::ServerHandle() {
 			}
 			CloseHandle(hpipe_);
 			return true;
-		} else if (c == '4') {
-			Display::DisplayMenu();
-
 		} else if (c == '5') {
 			exit(1);
 		} else {
@@ -103,6 +100,9 @@ int WINAPI Pipe::ClientHandle() {
 		char c = _display.DisplayClient();
 		if (c == '1') {
 			CloseHandle(fpipe);
+			std::cout << "Disconnect to server!!";
+			Sleep(1000);
+			exit(1);
 		} else if (c == '2') {
 			DWORD dw_written, write;
 			TCHAR  buf[1024];
@@ -137,8 +137,6 @@ int WINAPI Pipe::ClientHandle() {
 			CloseHandle(fpipe);
 			return 0;
 
-		} else if (c == '4') {
-			Display::DisplayMenu();
 		} else if (c == '5') {
 			exit(1);
         } else {

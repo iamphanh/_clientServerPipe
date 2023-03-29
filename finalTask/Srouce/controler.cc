@@ -32,7 +32,9 @@ void WINAPI Controler::ControlerClient(Client& _client)
 		ControlerServer(*_server);
 		clientS.unlock();
 	} else {
-		std::cout << "Connect failed" << std::endl;
+		std::cout << "Server is busy. Connect failed!!" << std::endl;
+		Sleep(3000);
+		exit(1);
 	}
 }
 
